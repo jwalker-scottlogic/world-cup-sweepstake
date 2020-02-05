@@ -1,4 +1,4 @@
-const express = require('express')
+const express = require('express');
 
 const playerService = require('../services/playerService');
 
@@ -23,4 +23,5 @@ router.post('/new', async (req, res, next) => {
     next(error);
   }
 });
+
 module.exports = router;

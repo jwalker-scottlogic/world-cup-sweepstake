@@ -14,7 +14,8 @@ const DATABASE = {
     'FIXTURES': 'fixtures',
     'LAST_API_LOOKUP': 'last-api-lookup',
     'PLAYERS': 'players',
-    'TEAMS': 'teams'
+    'TEAMS': 'teams',
+    'OTP': 'otp'
   },
   'URL': process.env.MONGODB_URI || 'mongodb://localhost:27017/',
   'NAME': process.env.MONGODB_NAME || 'world-cup-sweepstake'
