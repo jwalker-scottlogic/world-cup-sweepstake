@@ -19,7 +19,7 @@ const getTotalGoals = teams => {
     .reduce((tally, next) => tally + next);
 };
 
-async function getPlayersWithPoints(isLiveRequest) {
+const getPlayersWithPoints = async (isLiveRequest) => {
   const players = await playerRepository.getPlayers();
   const teams = await competitionService.getTeamsWithOutcomeData(isLiveRequest);
 
@@ -48,6 +48,11 @@ async function getPlayersWithPoints(isLiveRequest) {
   return playersWithPoints;
 };
 
+const addPlayer = async (player) => {
+  return await playerRepository.addPlayer(player);
+};
+
 module.exports = {
-  getPlayersWithPoints
+  getPlayersWithPoints,
+  addPlayer
 };
