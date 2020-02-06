@@ -1,3 +1,5 @@
+const ObjectID = require('mongodb').ObjectID;
+
 const COLLECTIONS = require('../constants').DATABASE.COLLECTIONS;
 const databaseUtils = require('../databaseUtils');
 
@@ -14,7 +16,13 @@ const addPlayer = async (player) => {
   return result.insertedId;
 };
 
+const markAsVerified = async (playerId) => {
+  const playerCollection = await databaseUtils.getCollection(COLLECTIONS.PLAYERS);
+  await playerCollection.updateOne({ _id: new ObjectID(playerId)}, { $set: { verified: true }});
+};
+
 module.exports = {
   getPlayers,
-  addPlayer
+  addPlayer,
+  markAsVerified
 }

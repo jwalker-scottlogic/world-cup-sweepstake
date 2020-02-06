@@ -50,7 +50,9 @@ const getPlayersWithPoints = async (isLiveRequest) => {
 };
 
 const addPlayer = async (player) => {
-  const newPlayerId = await playerRepository.addPlayer(player);
+  // TODO: Verify email does not already exist.
+
+  const newPlayerId = await playerRepository.addPlayer({ ...player, verified: false });
   await otpService.mailNewOtp({ ...player, id: newPlayerId });
   return newPlayerId;
 };
