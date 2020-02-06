@@ -9,6 +9,9 @@ const COMPETITION_API = {
   }
 };
 
+const EMAIL_USER = process.env.EMAIL_USER || JSON.parse(fs.readFileSync('./email-credentials.json')).user;
+const EMAIL_PASS = process.env.EMAIL_PASS || JSON.parse(fs.readFileSync('./email-credentials.json')).pass;
+
 const DATABASE = {
   'COLLECTIONS': {
     'FIXTURES': 'fixtures',
@@ -23,5 +26,7 @@ const DATABASE = {
 
 module.exports = {
   COMPETITION_API,
-  DATABASE
+  DATABASE,
+  EMAIL_USER,
+  EMAIL_PASS
 };

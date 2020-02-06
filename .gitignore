@@ -65,3 +65,4 @@ build/
 
 # api key file
 api-key.txt
+email-credentials.json

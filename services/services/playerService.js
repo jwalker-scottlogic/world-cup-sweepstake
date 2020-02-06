@@ -1,5 +1,6 @@
 const playerRepository = require('../repositories/playerRepository');
 const competitionService = require('../services/competitionService');
+const otpService = require('../services/otpService');
 
 const getPointsForPlayer = (player, teams) => {
   let points = 0;
@@ -49,7 +50,9 @@ const getPlayersWithPoints = async (isLiveRequest) => {
 };
 
 const addPlayer = async (player) => {
-  return await playerRepository.addPlayer(player);
+  const newPlayerId = await playerRepository.addPlayer(player);
+  await otpService.mailNewOtp({ ...player, id: newPlayerId });
+  return newPlayerId;
 };
 
 module.exports = {
