@@ -69,12 +69,14 @@ const verifyOtp = async (playerId, key) => {
     throw new Error(`OTP Key provided for playerId ${playerId} does not match database value.`);
   }
 
-  // TODO: Verify we're before the expiry time.
+  const expiry = moment(otp.expiry);
+  if (moment().isAfter(expiry)) {
+    throw new Error(`OTP for playerId ${playerId} has expired`);
+  }
 
   console.log(`Player ${playerId} has successfully been verified!`);
 
-  otpRepository.removeByKey(key);
-
+  await otpRepository.removeByKey(key);
   await playerRepository.markAsVerified(playerId);
 };
 
