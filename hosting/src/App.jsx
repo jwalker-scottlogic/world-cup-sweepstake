@@ -7,7 +7,6 @@ import Dashboard from './components/Dashboard';
 import './App.css';
 
 const App = () => {
-
   return (
     <div className="App">
       
@@ -18,7 +17,6 @@ const App = () => {
       <BrowserRouter>
         <Switch>
           <Route path="/admin">
-            {/* Admin route*/}  
               <AdminComponent />
           </Route>
           <Route path="/">
