@@ -87,10 +87,6 @@ const Dashboard = () => {
 
     return (
         <div className="Dashboard">
-            <header className="App-header">
-                <h1>Scott Logic Newcastle's World Cup 2022 Sweepstake</h1>
-            </header>
-
             { error && <ErrorWrapper message={error} /> }
 
             {isLoading &&
