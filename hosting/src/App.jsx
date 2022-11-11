@@ -7,13 +7,11 @@ import Dashboard from './components/Dashboard';
 import './App.css';
 
 const App = () => {
-
   return (
     <div className="App">
       <BrowserRouter>
         <Switch>
           <Route path="/admin">
-            {/* Admin route*/}  
               <AdminComponent />
           </Route>
           <Route path="/">

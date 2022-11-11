@@ -28,9 +28,14 @@ td {
 }
 
 .competition-table {
-  position: fixed;
+  position: absolute;
   right: 50px;
   top: 75px;
+  padding-bottom: 20px;
+}
+
+.player-table {
+  padding-bottom: 20px;
 }
 
 .data-options {
