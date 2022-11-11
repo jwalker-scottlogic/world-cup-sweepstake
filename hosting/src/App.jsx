@@ -35,13 +35,15 @@ const App = () => {
     setIsLoading(true);
 
     try {
-      await getData(`/api/players?live=${isLiveData}`, setPlayers);
-      await getData(`/api/competition/teams?live=${isLiveData}`, setTeams);
-      await getData(
-        '/api/competition/fixtures',
-        setFixtures,
-        fixtures => fixtures.map(f => ({ ...f, luxonDate: DateTime.fromISO(f.utcDate)}))
-      );
+      await Promise.all([
+        getData(`/api/players?live=${isLiveData}`, setPlayers),
+        getData(`/api/competition/teams?live=${isLiveData}`, setTeams),
+        getData(
+          '/api/competition/fixtures',
+          setFixtures,
+          fixtures => fixtures.map(f => ({ ...f, luxonDate: DateTime.fromISO(f.utcDate)}))
+        )
+      ]);
     } catch (err) {
       setError(err.message);
     }
