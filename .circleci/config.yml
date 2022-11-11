@@ -1,0 +1,50 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@4.7
+
+jobs:
+  build:
+    docker:
+      - image: cimg/node:16.18
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1- dependencies-{{ checksum "package-lock.json" }}
+      - run:
+          name: Install dependencies
+          command: npm install
+      - save_cache:
+          key: v1- dependencies-{{ checksum "package-lock.json" }}
+          paths:
+            - node_modules
+      - run:
+          name: Build
+          command: npm run build
+  deploy_production:
+    docker:
+      - image: cimg/node:18.12
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1- dependencies-{{ checksum "package-lock.json" }}
+      - run:
+          name: Build
+          command: npm run deploy -- --token "$FIREBASE_TOKEN"
+
+workflows:
+  ci-build:
+    jobs:
+      - build       
+      - approve_deploy_prod:
+          type: approval
+          requires:
+            - build
+          filters:
+            branches:
+              only: firebase
+      - deploy_production:
+          requires:
+            - approve_deploy_prod
