@@ -6,5 +6,8 @@
     "deploy:functions": "firebase deploy --only functions",
     "local:addplayers": "node ./utils/local/addPlayersToLocalFirestore.js",
     "install:all": "(cd functions && npm install) && (cd ../hosting && npm install) && (cd ../utils/local && npm install) && (cd ../player-entry && npm install)"
+  },
+  "devDependencies": {
+    "firebase-tools": "9.23.3"
   }
 }

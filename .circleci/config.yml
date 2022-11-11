@@ -22,8 +22,7 @@ jobs:
       - checkout
       - run:
           name: Deploy
-          command: npm run deploy -- --token "$FIREBASE_TOKEN"
-
+          command: cd hosting; npm run build; cd ../; ./node_modules/.bin/firebase deploy --token "$FIREBASE_TOKEN" --only functions,hosting
 workflows:
   ci-build:
     jobs:
