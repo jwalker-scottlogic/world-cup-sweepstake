@@ -1,0 +1,39 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@4.7
+
+jobs:
+  build:
+    docker:
+      - image: cimg/node:16.18
+    steps:
+      - checkout
+      - run:
+          name: Install hosting dependencies
+          command: cd hosting; npm install
+      - run:
+          name: Build
+          command: cd hosting; npm run build
+  deploy_production:
+    docker:
+      - image: cimg/node:18.12
+    steps:
+      - checkout
+      - run:
+          name: Deploy
+          command: cd hosting; npm run build; cd ../; ./node_modules/.bin/firebase deploy --token "$FIREBASE_TOKEN" --only functions,hosting
+workflows:
+  ci-build:
+    jobs:
+      - build       
+      - approve_deploy_prod:
+          type: approval
+          requires:
+            - build
+          filters:
+            branches:
+              only: firebase
+      - deploy_production:
+          requires:
+            - approve_deploy_prod
