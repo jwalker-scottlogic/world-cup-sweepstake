@@ -13,9 +13,9 @@ const AdminComponent = () => {
   const [outcomeTeam2, setOutcomeTeam2] = useState("");
   const [outcomeTeam3, setOutcomeTeam3] = useState("");
 
-  const getData = async (url, setFunc, mapFunc) => {
+  const fetchTeams = async () => {
     setIsLoading(true);
-    const response = await fetch(url);
+    const response = await fetch("/api/competition/teams");
     const json = await response.json();
     setIsLoading(false);
 
@@ -23,11 +23,11 @@ const AdminComponent = () => {
       throw new Error(json);
     }
 
-    setFunc(mapFunc ? mapFunc(json) : json);
+    setTeams(json);
   };
 
   useEffect(() => {
-    getData("/api/competition/teams", setTeams);
+    fetchTeams();
   }, []);
 
   useEffect(() => {
