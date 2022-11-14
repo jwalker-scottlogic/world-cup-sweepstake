@@ -1,3 +1,4 @@
+const { response } = require('express');
 const express = require('express')
 
 const playerService = require('../services/playerService');
@@ -9,6 +10,16 @@ router.get('/', async (request, response) => {
   try {
     const players = await playerService.getPlayersWithPoints(isLiveRequest);
     response.json(players);
+  } catch (error) {
+    response.status(500).json(error.message).send();
+    return;
+  }
+});
+
+router.post('/', async (request, response) => {
+  try {
+    await playerService.createPlayer(request.body);
+    response.status(200).send();
   } catch (error) {
     response.status(500).json(error.message).send();
     return;

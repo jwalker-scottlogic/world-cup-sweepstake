@@ -10,6 +10,11 @@ async function getPlayers() {
   return players;
 }
 
+async function createPlayer(player) {
+  await playerRef.add(player);
+}
+
 module.exports = {
-  getPlayers
+  getPlayers,
+  createPlayer
 }
