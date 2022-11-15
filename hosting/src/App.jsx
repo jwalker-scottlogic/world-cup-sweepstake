@@ -1,15 +1,14 @@
-import React from 'react';
-import { Route, Switch, BrowserRouter } from 'react-router-dom'
+import React from "react";
+import { Route, Switch, BrowserRouter } from "react-router-dom";
 
-import AdminComponent from './components/AdminComponent';
-import Dashboard from './components/Dashboard';
+import AdminComponent from "./components/AdminComponent";
+import Dashboard from "./components/Dashboard";
 
-import './App.css';
+import "./App.css";
 
 const App = () => {
   return (
     <div className="App">
-      
       <header className="App-header">
         <h1>Scott Logic Newcastle's World Cup 2022 Sweepstake</h1>
       </header>
@@ -17,7 +16,7 @@ const App = () => {
       <BrowserRouter>
         <Switch>
           <Route path="/admin">
-              <AdminComponent />
+            <AdminComponent />
           </Route>
           <Route path="/">
             <Dashboard />
@@ -26,6 +25,6 @@ const App = () => {
       </BrowserRouter>
     </div>
   );
-}
+};
 
 export default App;

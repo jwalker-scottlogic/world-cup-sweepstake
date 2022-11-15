@@ -1,11 +1,7 @@
-import React from 'react';
+import React from "react";
 
-import './Error.css';
+import "./Error.css";
 
-const Error = ({ message }) => (
-  <div className = "error">
-    { message }
-  </div>
-);
+const Error = ({ message }) => <div className="error">{message}</div>;
 
 export default Error;
