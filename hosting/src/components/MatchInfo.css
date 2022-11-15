@@ -1,6 +1,6 @@
 .upcoming-matches {
-    width: 430px;
-    margin: 0 auto;
+  width: 430px;
+  margin: 0 auto;
 }
 
 .upcoming-matches > h2 {
@@ -13,7 +13,6 @@
   margin: 0 auto;
 }
 
-
 .match-date {
   margin: 5px;
 }
@@ -24,11 +23,12 @@
 }
 
 .match-team {
-    background: #dff4f5;
-    padding: 5px;
+  background: #dff4f5;
+  padding: 5px;
 }
 
-.match-goals, .match-time {
+.match-goals,
+.match-time {
   background: #2bb3bb;
   padding: 5px;
   display: inline-block;
@@ -60,12 +60,12 @@
 
 @keyframes pulsate {
   0% {
-      opacity: 1;
+    opacity: 1;
   }
   50% {
-      opacity: 0.2;
+    opacity: 0.2;
   }
   100% {
-      opacity: 1;
+    opacity: 1;
   }
 }

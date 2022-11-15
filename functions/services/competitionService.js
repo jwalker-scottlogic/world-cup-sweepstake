@@ -1,10 +1,10 @@
-const competitionRepository = require('../repositories/competitionRepository');
+const competitionRepository = require("../repositories/competitionRepository");
 
 const defaultOutcomeData = {
   goals: 0,
   wins: 0,
   draws: 0,
-  losses: 0
+  losses: 0,
 };
 
 async function getTeamsWithOutcomeData(isLiveRequest) {
@@ -14,26 +14,32 @@ async function getTeamsWithOutcomeData(isLiveRequest) {
   const teamsWithOutcomeData = {};
 
   teams
-    .sort((a, b) => (a.name < b.name) ? -1 : 1)
+    .sort((a, b) => (a.name < b.name ? -1 : 1))
     .forEach(({ name, crestUrl, isEliminated }) => {
       teamsWithOutcomeData[name] = {
         flag: crestUrl,
         isEliminated,
-        ...defaultOutcomeData
-      }
+        ...defaultOutcomeData,
+      };
     });
 
   fixtures
-    .filter(fixture => isLiveRequest ? fixture.status === 'FINISHED' || fixture.status === 'IN_PLAY' : fixture.status === 'FINISHED')
-    .forEach(fixture => {
+    .filter((fixture) =>
+      isLiveRequest
+        ? fixture.status === "FINISHED" || fixture.status === "IN_PLAY"
+        : fixture.status === "FINISHED"
+    )
+    .forEach((fixture) => {
       const homeGoals = fixture.score.fullTime.homeTeam;
       const awayGoals = fixture.score.fullTime.awayTeam;
 
       // Full time score includes penalty shootout.
       // Shootout goals do not count towards total.
-      if (fixture.score.duration === 'PENALTY_SHOOTOUT') {
-        teamsWithOutcomeData[fixture.homeTeam.name].goals += (homeGoals - fixture.score.penalties.homeTeam);
-        teamsWithOutcomeData[fixture.awayTeam.name].goals += (awayGoals - fixture.score.penalties.awayTeam);
+      if (fixture.score.duration === "PENALTY_SHOOTOUT") {
+        teamsWithOutcomeData[fixture.homeTeam.name].goals +=
+          homeGoals - fixture.score.penalties.homeTeam;
+        teamsWithOutcomeData[fixture.awayTeam.name].goals +=
+          awayGoals - fixture.score.penalties.awayTeam;
       } else {
         teamsWithOutcomeData[fixture.homeTeam.name].goals += homeGoals;
         teamsWithOutcomeData[fixture.awayTeam.name].goals += awayGoals;
@@ -63,9 +69,9 @@ async function getTeamsWithOutcomeData(isLiveRequest) {
     });
 
   return teamsWithOutcomeData;
-};
+}
 
 module.exports = {
   getFixtures: competitionRepository.getFixtures,
-  getTeamsWithOutcomeData
+  getTeamsWithOutcomeData,
 };
