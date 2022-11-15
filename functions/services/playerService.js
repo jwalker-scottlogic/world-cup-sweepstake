@@ -61,7 +61,12 @@ async function getPlayersWithPoints(isLiveRequest) {
   return playersWithPoints;
 };
 
+async function createPlayer(player) {
+  await playerRepository.createPlayer(player);
+}
+
 module.exports = {
   getPlayersWithPoints,
+  createPlayer,
   comparePlayers // exported for testing
 };

@@ -15,4 +15,14 @@ router.get('/', async (request, response) => {
   }
 });
 
+router.post('/', async (request, response) => {
+  try {
+    await playerService.createPlayer(request.body);
+    response.status(200).send();
+  } catch (error) {
+    response.status(500).json(error.message).send();
+    return;
+  }
+});
+
 module.exports = router;
