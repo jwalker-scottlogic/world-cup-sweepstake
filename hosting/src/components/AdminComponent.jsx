@@ -12,6 +12,7 @@ const AdminComponent = () => {
   const [outcomeTeam1, setOutcomeTeam1] = useState("");
   const [outcomeTeam2, setOutcomeTeam2] = useState("");
   const [outcomeTeam3, setOutcomeTeam3] = useState("");
+  const [isValid, setIsValid] = useState(false);
 
   const fetchTeams = async () => {
     setIsLoading(true);
@@ -33,6 +34,10 @@ const AdminComponent = () => {
   useEffect(() => {
     selectTeams();
   }, [teams]);
+
+  useEffect(() => {
+    checkIsValid();
+  }, [name, goals, goalTeam1, goalTeam2, outcomeTeam1, outcomeTeam2, outcomeTeam3])
 
   const onSubmit = async () => {
     try {
@@ -59,6 +64,19 @@ const AdminComponent = () => {
     }
     setIsLoading(false);
   };
+
+  const checkIsValid = () => {
+    setIsValid(name.length !== 0 && checkGoals() && checkTeamsIsUnique);
+  }
+
+  const checkTeamsIsUnique = () => {
+    let teamArray = [goalTeam1, goalTeam2, outcomeTeam1, outcomeTeam2, outcomeTeam3];
+    return (new Set(teamArray).size === 5);
+  }
+
+  const checkGoals = () => {
+    return Number.isInteger(+goals) && Number.parseInt(goals) >= 0;
+  }
 
   const getTeamSelect = (value, onChange) => {
     return (
@@ -137,7 +155,7 @@ const AdminComponent = () => {
           )}
         </div>
         <div className="form-block">
-          <button onClick={onSubmit}>Submit</button>
+          <button disabled={!isValid} onClick={onSubmit}>Submit</button>
         </div>
         <button onClick={selectTeams}>Pick teams</button>
       </div>
