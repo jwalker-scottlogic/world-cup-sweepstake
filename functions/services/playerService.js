@@ -6,7 +6,9 @@ const getPointsForPlayer = (player, teams) => {
   player.teams.goals.forEach((team) => {
     points += teams[team].goals;
   });
-  player.teams.outcomes.forEach((team) => { points += teams[team].draws + teams[team].wins * 3; });
+  player.teams.outcomes.forEach((team) => {
+    points += teams[team].draws + teams[team].wins * 3;
+  });
 
   return points;
 };
