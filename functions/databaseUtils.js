@@ -1,4 +1,4 @@
-const admin = require('firebase-admin');
+const admin = require("firebase-admin");
 
 admin.initializeApp();
 
@@ -9,8 +9,8 @@ function getDatabase() {
     db = admin.firestore();
   }
   return db;
-};
+}
 
 module.exports = {
-  getDatabase
+  getDatabase,
 };

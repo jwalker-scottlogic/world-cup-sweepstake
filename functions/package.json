@@ -8,7 +8,9 @@
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "prettier:check": "npx prettier --check \"**/*.{js,jsx,css}\"",
+    "prettier:fix": "npx prettier --write \"**/*.{js,jsx,css}\""
   },
   "engines": {
     "node": "14"
@@ -24,7 +26,8 @@
   },
   "devDependencies": {
     "firebase-functions-test": "^0.2.0",
-    "jest": "^27.0.4"
+    "jest": "^27.0.4",
+    "prettier": "2.7.1"
   },
   "private": true
 }

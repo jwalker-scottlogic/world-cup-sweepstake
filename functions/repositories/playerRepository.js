@@ -1,12 +1,12 @@
-const dbUtils = require('../databaseUtils');
+const dbUtils = require("../databaseUtils");
 
 const db = dbUtils.getDatabase();
-const playerRef = db.collection('players');
+const playerRef = db.collection("players");
 
 async function getPlayers() {
   const snapshot = await playerRef.get();
   const players = [];
-  snapshot.forEach(s => players.push(s.data()));
+  snapshot.forEach((s) => players.push(s.data()));
   return players;
 }
 
@@ -16,5 +16,5 @@ async function createPlayer(player) {
 
 module.exports = {
   getPlayers,
-  createPlayer
-}
+  createPlayer,
+};

@@ -14,11 +14,14 @@
   flex-wrap: wrap;
 } */
 
-.team-eliminated, .team-eliminated > td, .player-eliminated > td {
+.team-eliminated,
+.team-eliminated > td,
+.player-eliminated > td {
   background: lightgray;
 }
 
-.team-highlighted, .team-highlighted > td {
+.team-highlighted,
+.team-highlighted > td {
   background: #eb7c45 !important;
   color: white;
 }
@@ -39,15 +42,15 @@ td {
 }
 
 .data-options {
-    display: flex;
-    justify-content: space-evenly;
-    width: 30%;
-    margin: 0 auto;
-    padding-top: 20px;
+  display: flex;
+  justify-content: space-evenly;
+  width: 30%;
+  margin: 0 auto;
+  padding-top: 20px;
 }
 
 .refresh-data:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .left {
@@ -82,7 +85,7 @@ td {
   }
 
   table {
-    font-size: .6em;
+    font-size: 0.6em;
   }
 
   td {

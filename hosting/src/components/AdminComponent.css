@@ -1,12 +1,12 @@
 .adminComponent {
-    padding: 10px;
+  padding: 10px;
 }
 
 .adminComponent.isLoading {
-    opacity: 0.5;
-    pointer-events: none;
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 .form-block {
-    padding: 5px;
+  padding: 5px;
 }

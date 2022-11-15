@@ -13,6 +13,9 @@ jobs:
           name: Install hosting dependencies
           command: cd hosting; npm install
       - run:
+          name: Run prettier
+          command: cd functions; npm run prettier:check; cd hosting; npm run prettier:check
+      - run:
           name: Build
           command: cd hosting; npm run build
   deploy_production:

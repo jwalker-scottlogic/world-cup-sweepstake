@@ -6,7 +6,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "prettier:check": "npx prettier --check \"**/*.{js,jsx,css}\"",
+    "prettier:fix": "npx prettier --write \"**/*.{js,jsx,css}\""
   },
   "author": "",
   "license": "ISC",
@@ -29,5 +31,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "prettier": "2.7.1"
   }
 }
