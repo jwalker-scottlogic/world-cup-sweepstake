@@ -89,7 +89,7 @@ const AdminComponent = () => {
   };
 
   const checkGoals = () => {
-    return Number.isInteger(+goals, 10) && Number.parseInt(goals) >= 0;
+    return Number.isInteger(+goals) && Number.parseInt(goals, 10) >= 0;
   };
 
   const getTeamSelect = (value, onChange) => {
