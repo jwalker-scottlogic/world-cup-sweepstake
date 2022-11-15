@@ -10,8 +10,8 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install hosting dependencies
-          command: cd hosting; npm install
+          name: Install dependencies
+          command: cd hosting; npm install; cd ../functions; npm install
       - run:
           name: Run prettier
           command: cd functions; npm run prettier:check; cd ../hosting; npm run prettier:check
