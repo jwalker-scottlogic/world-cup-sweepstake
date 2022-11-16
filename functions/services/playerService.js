@@ -63,8 +63,34 @@ async function getPlayersWithPoints(isLiveRequest) {
 }
 
 async function createPlayer(player) {
+  const players = await playerRepository.getPlayers();
+  const playerNames = players.map((player) => player.name);
+  const playerTeams = [
+    player.teams.goals[0],
+    player.teams.goals[1],
+    player.teams.outcomes[0],
+    player.teams.outcomes[1],
+    player.teams.outcomes[2],
+  ];
+  if (
+    !player.name ||
+    playerNames.includes(player.name) ||
+    player.goalsPredicted === undefined ||
+    player.goalsPredicted < 0 ||
+    !areTeamsValid(playerTeams)
+  )
+    throw "Invalid data";
   await playerRepository.createPlayer(player);
 }
+
+const areTeamsValid = (teams) => {
+  if (teams.length < 5 || teams.includes(undefined)) {
+    return false;
+  }
+  return (
+    teams.filter((item, index) => teams.indexOf(item) != index).length === 0
+  );
+};
 
 module.exports = {
   getPlayersWithPoints,
