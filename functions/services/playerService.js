@@ -72,17 +72,26 @@ async function createPlayer(player) {
     player.teams.outcomes[1],
     player.teams.outcomes[2],
   ];
-  let duplicates = (arr) =>
-    arr.filter((item, index) => arr.indexOf(item) != index);
   if (
+    player.name === undefined ||
     !player.name ||
     playerNames.includes(player.name) ||
+    player.goalsPredicted === undefined ||
     player.goalsPredicted < 0 ||
-    duplicates(playerTeams).length !== 0
+    !areTeamsValid(playerTeams)
   )
     throw "Invalid data";
   await playerRepository.createPlayer(player);
 }
+
+const areTeamsValid = (teams) => {
+  if (teams.length < 5 || teams.includes(undefined)) {
+    return false;
+  }
+  return (
+    teams.filter((item, index) => teams.indexOf(item) != index).length === 0
+  );
+};
 
 module.exports = {
   getPlayersWithPoints,

@@ -74,7 +74,7 @@ const AdminComponent = () => {
   };
 
   const checkIsValid = () => {
-    setIsValid(name.length !== 0 && checkGoals() && checkTeamsIsUnique);
+    setIsValid(name.length !== 0 && checkGoals() && checkTeamsIsUnique());
   };
 
   const checkTeamsIsUnique = () => {
