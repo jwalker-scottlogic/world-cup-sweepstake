@@ -63,6 +63,24 @@ async function getPlayersWithPoints(isLiveRequest) {
 }
 
 async function createPlayer(player) {
+  const players = await playerRepository.getPlayers();
+  const playerNames = players.map((player) => player.name);
+  const playerTeams = [
+    player.teams.goals[0],
+    player.teams.goals[1],
+    player.teams.outcomes[0],
+    player.teams.outcomes[1],
+    player.teams.outcomes[2],
+  ];
+  let duplicates = (arr) =>
+    arr.filter((item, index) => arr.indexOf(item) != index);
+  if (
+    !player.name ||
+    playerNames.includes(player.name) ||
+    player.goalsPredicted < 0 ||
+    duplicates(playerTeams).length !== 0
+  )
+    throw "Invalid data";
   await playerRepository.createPlayer(player);
 }
 
