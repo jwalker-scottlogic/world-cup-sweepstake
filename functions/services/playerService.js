@@ -73,7 +73,6 @@ async function createPlayer(player) {
     player.teams.outcomes[2],
   ];
   if (
-    player.name === undefined ||
     !player.name ||
     playerNames.includes(player.name) ||
     player.goalsPredicted === undefined ||
