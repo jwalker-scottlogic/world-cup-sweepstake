@@ -25,4 +25,24 @@ router.post("/", async (request, response) => {
   }
 });
 
+router.put("/", async (request, response) => {
+  try {
+    await playerService.updatePlayer(request.body);
+    response.status(200).send();
+  } catch (error) {
+    response.status(500).json(error.message).send();
+    return;
+  }
+});
+
+router.delete("/", async (request, response) => {
+  try {
+    await playerService.deletePlayer(request.body);
+    response.status(200).send();
+  } catch (error) {
+    response.status(500).json(error.message).send();
+    return;
+  }
+});
+
 module.exports = router;

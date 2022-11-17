@@ -62,9 +62,9 @@ async function getPlayersWithPoints(isLiveRequest) {
   return playersWithPoints;
 }
 
-async function createPlayer(player) {
-  const players = await playerRepository.getPlayers();
+const checkPlayerValidity = (players, player) => {
   const playerNames = players.map((player) => player.name);
+  const playerIds = players.map((player) => player.id);
   const playerTeams = [
     player.teams.goals[0],
     player.teams.goals[1],
@@ -72,15 +72,30 @@ async function createPlayer(player) {
     player.teams.outcomes[1],
     player.teams.outcomes[2],
   ];
-  if (
+  return !(
     !player.name ||
     playerNames.includes(player.name) ||
+    !playerIds.includes(player.id) ||
     player.goalsPredicted === undefined ||
     player.goalsPredicted < 0 ||
     !areTeamsValid(playerTeams)
-  )
-    throw "Invalid data";
+  );
+};
+
+async function createPlayer(player) {
+  const players = await playerRepository.getPlayers();
+  if (!checkPlayerValidity(players, player)) throw "Invalid data";
   await playerRepository.createPlayer(player);
+}
+
+async function updatePlayer(player) {
+  const players = await playerRepository.getPlayers();
+  if (!checkPlayerValidity(players, player)) throw "No such player";
+  await playerRepository.updatePlayer(player);
+}
+
+async function deletePlayer(player) {
+  await playerRepository.deletePlayer(player);
 }
 
 const areTeamsValid = (teams) => {
@@ -95,5 +110,7 @@ const areTeamsValid = (teams) => {
 module.exports = {
   getPlayersWithPoints,
   createPlayer,
-  comparePlayers, // exported for testing
+  comparePlayers,
+  updatePlayer,
+  deletePlayer, // exported for testing
 };

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import classnames from "classnames";
+import EditablePlayerTable from "./EditablePlayerTable";
 import "./AdminComponent.css";
 
 const AdminComponent = () => {
@@ -13,22 +14,36 @@ const AdminComponent = () => {
   const [outcomeTeam2, setOutcomeTeam2] = useState("");
   const [outcomeTeam3, setOutcomeTeam3] = useState("");
   const [isValid, setIsValid] = useState(false);
+  const [players, setPlayers] = useState([]);
 
-  const fetchTeams = async () => {
-    setIsLoading(true);
-    const response = await fetch("/api/competition/teams");
+  const getData = async (url, setFunc) => {
+    const response = await fetch(url);
     const json = await response.json();
-    setIsLoading(false);
 
     if (!response.ok) {
       throw new Error(json);
     }
 
-    setTeams(json);
+    setFunc(json);
+  };
+
+  const loadData = async () => {
+    setIsLoading(true);
+
+    try {
+      await Promise.all([
+        getData(`/api/players`, setPlayers),
+        getData(`/api/competition/teams`, setTeams),
+      ]);
+    } catch (err) {
+      console.log(err);
+    }
+
+    setIsLoading(false);
   };
 
   useEffect(() => {
-    fetchTeams();
+    loadData();
   }, []);
 
   useEffect(() => {
@@ -174,6 +189,7 @@ const AdminComponent = () => {
           </button>
         </div>
         <button onClick={selectTeams}>Pick teams</button>
+        {<EditablePlayerTable rows={players} teams={teams} />}
       </div>
     </div>
   );
