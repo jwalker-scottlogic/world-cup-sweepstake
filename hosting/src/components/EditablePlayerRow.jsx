@@ -10,7 +10,6 @@ const EditablePlayerRow = ({ rank, teams, row }) => {
   const [outcomeTeam3, setOutcomeTeam3] = useState(row.teams.outcomes[2]);
   const [isValid, setIsValid] = useState(true);
   const [isUpdated, setIsUpdated] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
   const id = row.id;
 
   useEffect(() => {
@@ -28,7 +27,6 @@ const EditablePlayerRow = ({ rank, teams, row }) => {
 
   const onUpdate = async () => {
     try {
-      setIsLoading(true);
       await fetch("/api/players", {
         method: "PUT",
         headers: {
@@ -47,12 +45,10 @@ const EditablePlayerRow = ({ rank, teams, row }) => {
     } catch (error) {
       console.log(error);
     }
-    setIsLoading(false);
   };
 
   const onDelete = async () => {
     try {
-      setIsLoading(true);
       await fetch("/api/players", {
         method: "DELETE",
         headers: {
@@ -71,7 +67,6 @@ const EditablePlayerRow = ({ rank, teams, row }) => {
     } catch (error) {
       console.log(error);
     }
-    setIsLoading(false);
   };
 
   const checkTeamsIsUnique = () => {

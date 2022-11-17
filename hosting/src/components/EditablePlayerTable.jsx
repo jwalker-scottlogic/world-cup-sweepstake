@@ -1,5 +1,4 @@
 import React from "react";
-import classnames from "classnames";
 
 import Table from "./Table";
 import EditablePlayerRow from "./EditablePlayerRow";
