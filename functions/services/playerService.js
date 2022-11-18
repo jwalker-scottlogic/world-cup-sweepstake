@@ -90,8 +90,6 @@ async function updatePlayer(player) {
   const players = await playerRepository.getPlayers();
   const playerIds = players.map((player) => player.id);
   if (!playerIds.includes(player.id) || !checkPlayerValidity(player)) {
-    console.log("Hit!");
-    console.log(player);
     throw "No such player";
   }
   await playerRepository.updatePlayer(player);
