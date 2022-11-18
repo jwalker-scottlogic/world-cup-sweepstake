@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const EditablePlayerRow = ({ rank, teams, row }) => {
+const EditablePlayerRow = ({ rank, teams, row, onDelete, onUpdate }) => {
   const [name, setName] = useState(row.name);
   const [goals, setGoals] = useState(row.goalsPredicted);
   const [goalTeam1, setGoalTeam1] = useState(row.teams.goals[0]);
@@ -11,6 +11,10 @@ const EditablePlayerRow = ({ rank, teams, row }) => {
   const [isValid, setIsValid] = useState(true);
   const [isUpdated, setIsUpdated] = useState(false);
   const id = row.id;
+
+  useEffect(() => {
+    checkIsUpdated();
+  }, []);
 
   useEffect(() => {
     checkIsValid();
@@ -25,39 +29,22 @@ const EditablePlayerRow = ({ rank, teams, row }) => {
     outcomeTeam3,
   ]);
 
-  const onUpdate = async () => {
-    try {
-      await fetch("/api/players", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id,
-          name,
-          goalsPredicted: Number(goals),
-          teams: {
-            goals: [goalTeam1, goalTeam2],
-            outcomes: [outcomeTeam1, outcomeTeam2, outcomeTeam3],
-          },
-        }),
-      });
-    } catch (error) {
-      console.log(error);
-    }
+  const onSubmitDelete = async () => {
+    onDelete(id);
   };
 
-  const onDelete = async () => {
-    try {
-      await fetch(`/api/players/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
+  const onSubmitUpdate = async () => {
+    onUpdate(
+      JSON.stringify({
+        id,
+        name,
+        goalsPredicted: Number(goals),
+        teams: {
+          goals: [goalTeam1, goalTeam2],
+          outcomes: [outcomeTeam1, outcomeTeam2, outcomeTeam3],
         },
-      });
-    } catch (error) {
-      console.log(error);
-    }
+      })
+    );
   };
 
   const checkTeamsIsUnique = () => {
@@ -121,12 +108,12 @@ const EditablePlayerRow = ({ rank, teams, row }) => {
         />
       </td>
       <td>
-        <button disabled={!isValid || !isUpdated} onClick={onUpdate}>
+        <button disabled={!isValid || !isUpdated} onClick={onSubmitUpdate}>
           Update
         </button>
       </td>
       <td>
-        <button onClick={onDelete}>Delete</button>
+        <button onClick={onSubmitDelete}>Delete</button>
       </td>
     </tr>
   );

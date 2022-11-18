@@ -62,6 +62,39 @@ const AdminComponent = () => {
     outcomeTeam3,
   ]);
 
+  const onUpdate = async (player) => {
+    try {
+      setIsLoading(true);
+      await fetch("/api/players", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: player,
+      });
+      loadData();
+    } catch (error) {
+      console.log(error);
+    }
+    setIsLoading(false);
+  };
+
+  const onDelete = async (id) => {
+    try {
+      setIsLoading(true);
+      await fetch(`/api/players/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      loadData();
+    } catch (error) {
+      console.log(error);
+    }
+    setIsLoading(false);
+  };
+
   const onSubmit = async () => {
     try {
       setIsLoading(true);
@@ -82,6 +115,7 @@ const AdminComponent = () => {
       setName("");
       setGoals("");
       selectTeams();
+      loadData();
     } catch (error) {
       console.log(error);
     }
@@ -189,7 +223,14 @@ const AdminComponent = () => {
           </button>
         </div>
         <button onClick={selectTeams}>Pick teams</button>
-        {<EditablePlayerTable rows={players} teams={teams} />}
+        {
+          <EditablePlayerTable
+            rows={players}
+            teams={teams}
+            onDelete={onDelete}
+            onUpdate={onUpdate}
+          />
+        }
       </div>
     </div>
   );

@@ -12,9 +12,17 @@ const headings = [
   { title: "Actions", colspan: 2 },
 ];
 
-const EditablePlayerTable = ({ teams, rows }) => {
+const EditablePlayerTable = ({ teams, rows, onDelete, onUpdate }) => {
   const renderRow = (row, rank) => {
-    return <EditablePlayerRow rank={rank} teams={teams} row={row} />;
+    return (
+      <EditablePlayerRow
+        rank={rank}
+        teams={teams}
+        row={row}
+        onDelete={onDelete}
+        onUpdate={onUpdate}
+      />
+    );
   };
 
   return (
