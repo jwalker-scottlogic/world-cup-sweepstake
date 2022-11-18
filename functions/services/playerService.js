@@ -62,9 +62,7 @@ async function getPlayersWithPoints(isLiveRequest) {
   return playersWithPoints;
 }
 
-const checkPlayerValidity = (players, player) => {
-  const playerNames = players.map((player) => player.name);
-  const playerIds = players.map((player) => player.id);
+const checkPlayerValidity = (player) => {
   const playerTeams = [
     player.teams.goals[0],
     player.teams.goals[1],
@@ -74,8 +72,6 @@ const checkPlayerValidity = (players, player) => {
   ];
   return !(
     !player.name ||
-    playerNames.includes(player.name) ||
-    !playerIds.includes(player.id) ||
     player.goalsPredicted === undefined ||
     player.goalsPredicted < 0 ||
     !areTeamsValid(playerTeams)
@@ -84,13 +80,20 @@ const checkPlayerValidity = (players, player) => {
 
 async function createPlayer(player) {
   const players = await playerRepository.getPlayers();
-  if (!checkPlayerValidity(players, player)) throw "Invalid data";
+  const playerNames = players.map((player) => player.name);
+  if (playerNames.includes(player.name) || !checkPlayerValidity(player))
+    throw "Invalid data";
   await playerRepository.createPlayer(player);
 }
 
 async function updatePlayer(player) {
   const players = await playerRepository.getPlayers();
-  if (!checkPlayerValidity(players, player)) throw "No such player";
+  const playerIds = players.map((player) => player.id);
+  if (!playerIds.includes(player.id) || !checkPlayerValidity(player)) {
+    console.log("Hit!");
+    console.log(player);
+    throw "No such player";
+  }
   await playerRepository.updatePlayer(player);
 }
 
