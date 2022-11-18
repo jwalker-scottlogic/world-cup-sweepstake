@@ -35,9 +35,9 @@ router.put("/", async (request, response) => {
   }
 });
 
-router.delete("/", async (request, response) => {
+router.delete(`/:id`, async (request, response) => {
   try {
-    await playerService.deletePlayer(request.body);
+    await playerService.deletePlayer(request.params.id);
     response.status(200).send();
   } catch (error) {
     response.status(500).json(error.message).send();

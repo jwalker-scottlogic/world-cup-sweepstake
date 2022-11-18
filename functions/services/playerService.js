@@ -95,8 +95,8 @@ async function updatePlayer(player) {
   await playerRepository.updatePlayer(player);
 }
 
-async function deletePlayer(player) {
-  await playerRepository.deletePlayer(player);
+async function deletePlayer(playerId) {
+  await playerRepository.deletePlayer(playerId);
 }
 
 const areTeamsValid = (teams) => {

@@ -22,8 +22,8 @@ async function updatePlayer(player) {
   await playerRef.doc(player.id).set(player);
 }
 
-async function deletePlayer(player) {
-  await playerRef.doc(player.id).delete();
+async function deletePlayer(playerId) {
+  await playerRef.doc(playerId).delete();
 }
 
 module.exports = {

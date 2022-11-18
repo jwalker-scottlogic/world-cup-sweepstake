@@ -49,20 +49,11 @@ const EditablePlayerRow = ({ rank, teams, row }) => {
 
   const onDelete = async () => {
     try {
-      await fetch("/api/players", {
+      await fetch(`/api/players/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          id,
-          name,
-          goalsPredicted: Number(goals),
-          teams: {
-            goals: [goalTeam1, goalTeam2],
-            outcomes: [outcomeTeam1, outcomeTeam2, outcomeTeam3],
-          },
-        }),
       });
     } catch (error) {
       console.log(error);
