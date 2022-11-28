@@ -15,7 +15,7 @@ const AdminComponent = () => {
   const [isValid, setIsValid] = useState(false);
   const [players, setPlayers] = useState([]);
 
-  const getData = async (url, setFunc) => {
+  const getData = async (url) => {
     const response = await fetch(url);
     const json = await response.json();
 
@@ -23,17 +23,20 @@ const AdminComponent = () => {
       throw new Error(json);
     }
 
-    setFunc(json);
+    return json;
   };
 
   const loadData = async () => {
     setIsLoading(true);
 
     try {
-      await Promise.all([
-        getData(`/api/players`, setPlayers),
-        getData(`/api/competition/teams`, setTeams),
+      const [players, teams] = await Promise.all([
+        getData(`/api/players`),
+        getData(`/api/competition/teams`),
       ]);
+
+      setPlayers(players);
+      setTeams(teams);
     } catch (err) {
       console.log(err);
     }
@@ -47,7 +50,7 @@ const AdminComponent = () => {
 
   useEffect(() => {
     selectTeams();
-  }, [teams, players]);
+  }, [teams]);
 
   useEffect(() => {
     checkIsValid();
@@ -80,7 +83,6 @@ const AdminComponent = () => {
       });
       setName("");
       setGoals("");
-      selectTeams();
       loadData();
     } catch (error) {
       console.log(error);
