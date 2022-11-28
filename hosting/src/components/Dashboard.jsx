@@ -131,7 +131,7 @@ const Dashboard = () => {
                 {getPrizePool().last}
               </p>
             </div>
-            <MatchInfo matches={fixtures} />
+            <MatchInfo matches={fixtures} onHover={onTeamHover} teams={teams} />
             <PlayerTable rows={players} teams={teams} onHover={onTeamHover} />
           </div>
           <CompetitionTable
