@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { DateTime } from "luxon";
+import classnames from "classnames";
 
 import "./MatchInfo.css";
 
-const UpcomingMatches = ({ matches }) => {
+const UpcomingMatches = ({ matches, teams, onHover }) => {
   const [upcomingMatches, setUpcomingMatches] = useState([]);
   const [today] = useState(DateTime.utc().startOf("day"));
 
@@ -22,6 +23,11 @@ const UpcomingMatches = ({ matches }) => {
     }
   };
 
+  const teamClassNames = (team, homeOrAway) =>
+    classnames("match-team", `match-team-${homeOrAway}`, {
+      "team-highlighted": teams[team].isHighlighted,
+    });
+
   const displayMatchScore = (status) =>
     status === "IN_PLAY" || status === "FINISHED" || status === "PAUSED";
 
@@ -31,7 +37,13 @@ const UpcomingMatches = ({ matches }) => {
       className="match"
     >
       <div className="match-result">
-        <div className="match-team match-team-home">{match.homeTeam.name}</div>
+        <div
+          className={teamClassNames(match.homeTeam.name, "home")}
+          onMouseEnter={(_) => onHover(match.homeTeam.name)}
+          onMouseOut={(_) => onHover(undefined)}
+        >
+          {match.homeTeam.name}
+        </div>
         {displayMatchScore(match.status) ? (
           <div className="match-score">
             <div className="match-goals match-goals-home">
@@ -44,7 +56,13 @@ const UpcomingMatches = ({ matches }) => {
         ) : (
           <div className="match-time">{getMatchTime(match.luxonDate)}</div>
         )}
-        <div className="match-team match-team-away">{match.awayTeam.name}</div>
+        <div
+          className={teamClassNames(match.awayTeam.name, "away")}
+          onMouseEnter={(_) => onHover(match.awayTeam.name)}
+          onMouseOut={(_) => onHover(undefined)}
+        >
+          {match.awayTeam.name}
+        </div>
       </div>
       <div className="match-status">{renderMatchStatus(match)}</div>
     </div>
