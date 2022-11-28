@@ -6,7 +6,11 @@ const playerRef = db.collection("players");
 async function getPlayers() {
   const snapshot = await playerRef.get();
   const players = [];
-  snapshot.forEach((s) => players.push(s.data()));
+  snapshot.forEach((s) => {
+    let player = s.data();
+    player.id = s.id;
+    players.push(player);
+  });
   return players;
 }
 
@@ -14,7 +18,17 @@ async function createPlayer(player) {
   await playerRef.add(player);
 }
 
+async function updatePlayer(player) {
+  await playerRef.doc(player.id).set(player);
+}
+
+async function deletePlayer(playerId) {
+  await playerRef.doc(playerId).delete();
+}
+
 module.exports = {
   getPlayers,
   createPlayer,
+  updatePlayer,
+  deletePlayer,
 };
