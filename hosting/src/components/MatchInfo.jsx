@@ -107,6 +107,15 @@ const UpcomingMatches = ({ matches, teams, onHover }) => {
         <div className="match-info">
           {renderMatchDate(upcomingMatches[0].luxonDate)}
           {upcomingMatches.map((match) => renderRow(match))}
+          <div>Total matches: {matches.length}</div>
+          <div>
+            Total played:{" "}
+            {matches.filter((m) => m.status === "FINISHED").length}
+          </div>
+          <div>
+            Total remaining:{" "}
+            {matches.filter((m) => m.status !== "FINISHED").length}
+          </div>
         </div>
       )}
     </div>
