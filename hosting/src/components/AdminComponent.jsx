@@ -13,22 +13,39 @@ const AdminComponent = () => {
   const [outcomeTeam2, setOutcomeTeam2] = useState("");
   const [outcomeTeam3, setOutcomeTeam3] = useState("");
   const [isValid, setIsValid] = useState(false);
+  const [players, setPlayers] = useState([]);
 
-  const fetchTeams = async () => {
-    setIsLoading(true);
-    const response = await fetch("/api/competition/teams");
+  const getData = async (url) => {
+    const response = await fetch(url);
     const json = await response.json();
-    setIsLoading(false);
 
     if (!response.ok) {
       throw new Error(json);
     }
 
-    setTeams(json);
+    return json;
+  };
+
+  const loadData = async () => {
+    setIsLoading(true);
+
+    try {
+      const [players, teams] = await Promise.all([
+        getData(`/api/players`),
+        getData(`/api/competition/teams`),
+      ]);
+
+      setPlayers(players);
+      setTeams(teams);
+    } catch (err) {
+      console.log(err);
+    }
+
+    setIsLoading(false);
   };
 
   useEffect(() => {
-    fetchTeams();
+    loadData();
   }, []);
 
   useEffect(() => {
@@ -66,7 +83,7 @@ const AdminComponent = () => {
       });
       setName("");
       setGoals("");
-      selectTeams();
+      loadData();
     } catch (error) {
       console.log(error);
     }
@@ -103,19 +120,44 @@ const AdminComponent = () => {
   };
 
   const removeRandomTeam = (teams) => {
-    const index = Math.floor(Math.random() * teams.length);
-    const team = teams[index];
-    teams.splice(index, 1);
+    const lowestOccurence = Math.min(...Array.from(teams.values()));
+    const rarestTeams = [];
+    teams.forEach((occurence, value) => {
+      if (occurence === lowestOccurence) {
+        rarestTeams.push(value);
+      }
+    });
+    const index = Math.floor(Math.random() * rarestTeams.length);
+    const team = rarestTeams[index];
+    teams.delete(team);
     return team;
   };
 
   const selectTeams = () => {
-    const availableTeams = Object.keys(teams);
+    const availableTeams = new Map(
+      Object.keys(teams).map((team) => [team, countTeamOccurence(team)])
+    );
     setGoalTeam1(removeRandomTeam(availableTeams));
     setGoalTeam2(removeRandomTeam(availableTeams));
     setOutcomeTeam1(removeRandomTeam(availableTeams));
     setOutcomeTeam2(removeRandomTeam(availableTeams));
     setOutcomeTeam3(removeRandomTeam(availableTeams));
+  };
+
+  const countTeamOccurence = (team) => {
+    let occurence = 0;
+    players.forEach((player) => {
+      if (
+        player.teams.goals[0] === team ||
+        player.teams.goals[1] === team ||
+        player.teams.outcomes[0] === team ||
+        player.teams.outcomes[1] === team ||
+        player.teams.outcomes[2] === team
+      ) {
+        occurence++;
+      }
+    });
+    return occurence;
   };
 
   const getAdminClassNames = () => {
