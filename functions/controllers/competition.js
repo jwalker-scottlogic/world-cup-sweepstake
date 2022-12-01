@@ -17,6 +17,16 @@ router.get("/teams", async (request, response) => {
   }
 });
 
+router.patch("/teams/:name", async (request, response) => {
+  try {
+    await competitionService.updateTeam(request.params.name, request.body);
+    response.status(200).send();
+  } catch (error) {
+    response.status(500).json(error.message).send();
+    return;
+  }
+});
+
 router.get("/fixtures", async (_, response) => {
   try {
     const fixtures = await competitionService.getFixtures();
