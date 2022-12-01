@@ -108,7 +108,23 @@ async function getTeams() {
   return teams;
 }
 
+async function updateTeam(name, delta) {
+  const teams = await getTeams();
+  const newTeams = teams.map((team) => {
+    if (team.name === name) {
+      return {
+        ...team,
+        ...delta,
+      };
+    }
+    return { ...team };
+  });
+
+  await cacheTeams(newTeams);
+}
+
 module.exports = {
   getFixtures,
   getTeams,
+  updateTeam,
 };

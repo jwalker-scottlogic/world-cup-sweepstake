@@ -71,7 +71,12 @@ async function getTeamsWithOutcomeData(isLiveRequest) {
   return teamsWithOutcomeData;
 }
 
+async function updateTeam(name, delta) {
+  await competitionRepository.updateTeam(name, delta);
+}
+
 module.exports = {
   getFixtures: competitionRepository.getFixtures,
   getTeamsWithOutcomeData,
+  updateTeam,
 };

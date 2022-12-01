@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import classnames from "classnames";
 import "./AdminComponent.css";
+import TeamAdminComponent from "./TeamAdminComponent";
 
 const AdminComponent = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -215,8 +216,11 @@ const AdminComponent = () => {
             Submit
           </button>
         </div>
-        <button onClick={selectTeams}>Pick teams</button>
+        <div className="form-block">
+          <button onClick={selectTeams}>Pick teams</button>
+        </div>
       </div>
+      <TeamAdminComponent teams={teams} onReload={loadData} />
     </div>
   );
 };
