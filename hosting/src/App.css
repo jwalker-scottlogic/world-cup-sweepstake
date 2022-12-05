@@ -86,13 +86,24 @@ td {
 
   table {
     font-size: 0.6em;
+    table-layout: fixed;
+    width: 100%;
   }
 
   td {
     padding: 5px 1px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  th {
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .competition-table {
     position: relative;
+    right: 0px;
+    top: 0px;
   }
 }
