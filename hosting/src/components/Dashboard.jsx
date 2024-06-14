@@ -8,7 +8,7 @@ import ErrorWrapper from "./Error";
 
 import RefreshIcon from "../images/RefreshIcon.svg";
 
-const ENTRY_FEE = 2;
+const ENTRY_FEE = 1;
 
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -62,8 +62,9 @@ const Dashboard = () => {
   const getPrizePool = () => {
     const totalCash = players.length * ENTRY_FEE;
     return {
-      first: (totalCash * 0.85).toFixed(2),
-      last: (totalCash * 0.15).toFixed(2),
+      first: (totalCash * 0.6).toFixed(2),
+      middle: (totalCash * 0.2).toFixed(2),
+      last: (totalCash * 0.2).toFixed(2),
     };
   };
 
@@ -127,7 +128,8 @@ const Dashboard = () => {
             <div className="prize-pool">
               <h2>Current Prize Pool</h2>
               <p>
-                First: &pound;{getPrizePool().first} Last: &pound;
+                First: &pound;{getPrizePool().first} - Middle: &pound;
+                {getPrizePool().middle} - Last: &pound;
                 {getPrizePool().last}
               </p>
             </div>
