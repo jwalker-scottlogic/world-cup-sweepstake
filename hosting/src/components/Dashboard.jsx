@@ -128,7 +128,8 @@ const Dashboard = () => {
             <div className="prize-pool">
               <h2>Current Prize Pool</h2>
               <p>
-                First: &pound;{getPrizePool().first} - Middle: &pound;{getPrizePool().middle} - Last: &pound;
+                First: &pound;{getPrizePool().first} - Middle: &pound;
+                {getPrizePool().middle} - Last: &pound;
                 {getPrizePool().last}
               </p>
             </div>
